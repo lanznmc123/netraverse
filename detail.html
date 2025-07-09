@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detail Produk - Netraverse</title>
+  <link rel="stylesheet" href="detail.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+</head>
+<body>
+  <a href="index.html" class="home-button" title="Kembali ke Beranda">
+    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Beranda">
+  </a>
+
+  <div class="container">
+    <h1 class="product-name">NAMA PRODUK</h1>
+
+    <!-- Gambar produk dengan slider -->
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="produk_image/gambarproduk1.jpg" alt="Produk 1" /></div>
+        <div class="swiper-slide"><img src="produk_image/gambarproduk2.jpg" alt="Produk 2" /></div>
+        <!-- Tambahkan slide lain jika ada -->
+      </div>
+      <!-- Navigasi halaman -->
+      <div class="page-indicator"><span id="page-now">1</span>/7</div>
+    </div>
+
+    <!-- Deskripsi -->
+    <div class="deskripsi">
+      <h3>Deskripsi :</h3>
+      <p>
+        Ini contoh deskripsi produk. Bisa berisi beberapa baris detail seperti bahan, ukuran, warna, dll.
+      </p>
+    </div>
+
+    <!-- Tombol WhatsApp -->
+    <a href="https://wa.me/62882020255414?text=Halo%20saya%20ingin%20memesan%20NAMA%20PRODUK" 
+       class="order-button" 
+       target="_blank">
+      Buat Pesanan
+    </a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper('.swiper-container', {
+      on: {
+        slideChange: function () {
+          document.getElementById('page-now').innerText = this.activeIndex + 1;
+        }
+      }
+    });
+  </script>
+  
+  <script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('id');
+
+  const dataProduk = {
+    1: {
+      nama: "Akun ml sultan",
+      gambar: ["produk_image/akun1.jpg", "produk_image/akun1(2).jpg"],
+      deskripsi: "Kaos polos berkualitas tinggi, tersedia dalam berbagai ukuran dan warna.",
+    },
+    2: {
+      nama: "Jaket Hoodie",
+      gambar: ["produk_image/hoodie1.jpg", "produk_image/hoodie2.jpg"],
+      deskripsi: "Jaket hoodie tebal dan nyaman, cocok untuk cuaca dingin.",
+    },
+    3: {
+      nama: "Topi Trucker",
+      gambar: ["produk_image/topi1.jpg", "produk_image/topi2.jpg"],
+      deskripsi: "Topi gaya trucker, cocok untuk gaya kasual.",
+    },
+    4: {
+      nama: "Tas Selempang",
+      gambar: ["produk_image/tas1.jpg", "produk_image/tas2.jpg"],
+      deskripsi: "Tas selempang multifungsi, ringan dan cocok untuk aktivitas harian.",
+    }
+  };
+
+  if (dataProduk[id]) {
+    const produk = dataProduk[id];
+    document.querySelector(".product-name").innerText = produk.nama;
+    document.querySelector(".deskripsi p").innerText = produk.deskripsi;
+    document.querySelector(".order-button").href = `https://wa.me/62882020255414?text=Halo%20saya%20ingin%20memesan%20${encodeURIComponent(produk.nama)}`;
+
+    const wrapper = document.querySelector(".swiper-wrapper");
+    wrapper.innerHTML = "";
+    produk.gambar.forEach(src => {
+      const slide = document.createElement("div");
+      slide.className = "swiper-slide";
+      slide.innerHTML = `<img src="${src}" alt="${produk.nama}" />`;
+      wrapper.appendChild(slide);
+    });
+
+    const swiper = new Swiper(".swiper-container", {
+      on: {
+        slideChange: function () {
+          document.getElementById("page-now").innerText = this.activeIndex + 1;
+        }
+      }
+    });
+
+    // Jumlah halaman slider
+    document.querySelector(".page-indicator").innerHTML = `<span id="page-now">1</span>/${produk.gambar.length}`;
+  } else {
+    document.querySelector(".container").innerHTML = "<p>Produk tidak ditemukan.</p>";
+  }
+</script>
+
+</body>
+</html>
