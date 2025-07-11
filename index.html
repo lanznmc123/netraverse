@@ -83,6 +83,23 @@
       <a href="https://wa.me/62882020255414" target="_blank">WhatsApp</a>
     </div>
   </footer>
+<script>
+  // Ambil elemen input dan produk
+  const input = document.querySelector('.search-bar input');
+  const produkCards = document.querySelectorAll('.product-card');
 
+  input.addEventListener('input', function() {
+    const keyword = input.value.toLowerCase();
+
+    produkCards.forEach(card => {
+      const namaProduk = card.innerText.toLowerCase();
+      if (namaProduk.includes(keyword)) {
+        card.style.display = 'block'; // tampilkan
+      } else {
+        card.style.display = 'none'; // sembunyikan
+      }
+    });
+  });
+</script>
 </body>
 </html>
